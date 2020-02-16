@@ -76,3 +76,45 @@ def add_property():
             return prepare_response("message", "zip is not between 5 and 10 characters"), status.HTTP_400_BAD_REQUEST
     #end if/elif
 #end properties
+
+@bp.route('/properties/<int:id>', methods=['GET', 'DELETE'])
+def id_property(id):
+    if request.method == 'GET':
+        cur = None
+        conn = None
+        try:
+            gateway = DBGateway()
+            conn = gateway.get_connection()
+            cur = conn.cursor(pymysql.cursors.DictCursor)
+            cur.execute("SELECT * FROM tbl_property WHERE ID=%s", id)
+            rows = cur.fetchall()
+            response = jsonify(rows)
+            response.status_code = 200
+            return response
+        except Exception as e:
+            print(e)
+        finally:
+            cur.close()
+            conn.close()
+        # end try/except/finally
+    elif request.method == 'DELETE':
+        try:
+            gateway = DBGateway()
+            conn = gateway.get_connection()
+            cur = conn.cursor(pymysql.cursors.DictCursor)
+            cur.execute("DELETE FROM tbl_property WHERE ID=%s", id)
+            conn.commit()
+            return prepare_response("message", "deleted"), status.HTTP_200_OK
+        except Exception as e:
+            print(e)
+        finally:
+            cur.close()
+            conn.close()
+        # end try/except/finally
+    # end if/elif
+#end properties id
+
+@bp.errorhandler(404)
+def not_fount(error=None):
+    return prepare_response("message", "not found"), status.HTTP_404_NOT_FOUND
+# end not found
