@@ -1,5 +1,5 @@
 {
-    "url": "mysql://easel2.fulgentcorp.com/phpmyadmin:3306/",
+    "url": "easel2.fulgentcorp.com",
     "user": "xne693",
     "pass": "v3FPwOMciKr1dIoHvKUJ"
 }

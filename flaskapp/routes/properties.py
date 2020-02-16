@@ -1,12 +1,11 @@
 import flask
-import flask_restful
 from flask import request, jsonify
 from flask_api import status
-from flask_restful import reqparse
-import json
 import pymysql
 
 #conn uses the login info also located in DBGateway.py
+#example of post body for properties to use with Postman:
+#{"address": "12367 Road Rd.", "city": "San AN", "state": "TX", "zip": "79992"}
 currentDir = ""
 
 app = flask.current_app
