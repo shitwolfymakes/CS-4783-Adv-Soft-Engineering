@@ -90,7 +90,7 @@ def id_property(property_id):
             cur.execute("SELECT * FROM tbl_property WHERE ID=%s", property_id)
             rows = cur.fetchall()
             if not rows:
-                return prepare_response("ID does not exist in database.", status.HTTP_400_BAD_REQUEST)
+                return prepare_response("ID does not exist in database.", status.HTTP_404_NOT_FOUND)
             response = jsonify(rows)
             response.status_code = 200
             return response
