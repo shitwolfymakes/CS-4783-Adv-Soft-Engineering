@@ -91,7 +91,7 @@ def id_property(property_id):
             cur.execute("SELECT * FROM tbl_property WHERE ID=%s", property_id)
             rows = cur.fetchall()
             if not rows:
-                return prepare_response("ID does not exist in database.", status.HTTP_404_NOT_FOUND)
+                return prepare_response("message", "ID does not exist in database."), status.HTTP_404_NOT_FOUND
             response = jsonify(rows)
             response.status_code = 200
             return response
@@ -112,7 +112,7 @@ def id_property(property_id):
             cur.execute("SELECT * FROM tbl_property WHERE ID=%s", property_id)
             rows = cur.fetchall()
             if not rows:
-                return prepare_response("ID does not exist in database.", status.HTTP_404_NOT_FOUND)
+                return prepare_response("message", "ID does not exist in database."), status.HTTP_404_NOT_FOUND
             # delete the property if it does
             cur.execute("DELETE FROM tbl_property WHERE ID=%s", property_id)
             conn.commit()
