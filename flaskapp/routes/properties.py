@@ -87,6 +87,7 @@ def id_property(property_id):
             gateway = DBGateway()
             conn = gateway.get_connection()
             cur = conn.cursor(pymysql.cursors.DictCursor)
+            # check to see if the property exists
             cur.execute("SELECT * FROM tbl_property WHERE ID=%s", property_id)
             rows = cur.fetchall()
             if not rows:
@@ -107,6 +108,12 @@ def id_property(property_id):
             gateway = DBGateway()
             conn = gateway.get_connection()
             cur = conn.cursor(pymysql.cursors.DictCursor)
+            # check to see if the property exists
+            cur.execute("SELECT * FROM tbl_property WHERE ID=%s", property_id)
+            rows = cur.fetchall()
+            if not rows:
+                return prepare_response("ID does not exist in database.", status.HTTP_404_NOT_FOUND)
+            # delete the property if it does
             cur.execute("DELETE FROM tbl_property WHERE ID=%s", property_id)
             conn.commit()
             return prepare_response("message", "deleted"), status.HTTP_200_OK
