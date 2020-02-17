@@ -77,8 +77,9 @@ def add_property():
     #end if/elif
 #end properties
 
-@bp.route('/properties/<int:id>', methods=['GET', 'DELETE'])
-def id_property(id):
+
+@bp.route('/properties/<int:property_id>', methods=['GET', 'DELETE'])
+def id_property(property_id):
     if request.method == 'GET':
         cur = None
         conn = None
@@ -86,7 +87,7 @@ def id_property(id):
             gateway = DBGateway()
             conn = gateway.get_connection()
             cur = conn.cursor(pymysql.cursors.DictCursor)
-            cur.execute("SELECT * FROM tbl_property WHERE ID=%s", id)
+            cur.execute("SELECT * FROM tbl_property WHERE ID=%s", property_id)
             rows = cur.fetchall()
             response = jsonify(rows)
             response.status_code = 200
@@ -98,11 +99,13 @@ def id_property(id):
             conn.close()
         # end try/except/finally
     elif request.method == 'DELETE':
+        cur = None
+        conn = None
         try:
             gateway = DBGateway()
             conn = gateway.get_connection()
             cur = conn.cursor(pymysql.cursors.DictCursor)
-            cur.execute("DELETE FROM tbl_property WHERE ID=%s", id)
+            cur.execute("DELETE FROM tbl_property WHERE ID=%s", property_id)
             conn.commit()
             return prepare_response("message", "deleted"), status.HTTP_200_OK
         except Exception as e:
@@ -112,9 +115,10 @@ def id_property(id):
             conn.close()
         # end try/except/finally
     # end if/elif
-#end properties id
+#end properties property_id
+
 
 @bp.errorhandler(404)
-def not_fount(error=None):
+def not_found(error=None):
     return prepare_response("message", "not found"), status.HTTP_404_NOT_FOUND
-# end not found
+# end not_found
