@@ -10,7 +10,7 @@ def main():
     ### start swagger boilerplate ###
     swagger_url = '/swagger'
     api_url = '/static/swagger.json'
-    swaggerui_blueprint = get_swaggerui_bluprint(
+    swaggerui_blueprint = get_swaggerui_blueprint(
         swagger_url,
         api_url,
         config={
