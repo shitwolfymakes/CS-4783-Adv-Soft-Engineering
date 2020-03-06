@@ -1,5 +1,5 @@
 """
-This file contains the code for www.flaskappurl.com/
+This file contains the code for www.flaskappurl.com/hello
 """
 import flask
 from flask import jsonify
