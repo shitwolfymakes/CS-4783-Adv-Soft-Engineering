@@ -1,0 +1,241 @@
+{
+  "openapi": "3.0.0",
+  "info": {
+    "title": "flaskapp",
+    "description": "A flask app for Robinson's CS 4783",
+    "version": "1.0.0"
+  },
+  "servers": [
+    {
+      "url": "http://127.0.0.1:5000/hello"
+    }
+  ],
+  "tags": [
+    {
+      "name": "hello",
+      "description": "Returns a hello message"
+    },
+    {
+      "name": "property",
+      "description": "Access to property data"
+    }
+  ],
+  "paths": {
+    "/hello": {
+      "get": {
+        "tags": [
+          "hello"
+        ],
+        "summary": "Print a welcome message",
+        "operationId": "hello",
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Message"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/properties": {
+      "get": {
+        "tags": [
+          "property"
+        ],
+        "summary": "Return all properties stored in the database",
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/PropertyList"
+                }
+              }
+            }
+          }
+        }
+      },
+      "post": {
+        "tags": [
+          "property"
+        ],
+        "summary": "Add a property",
+        "operationId": "addProperty",
+        "requestBody": {
+          "description": "The property to be added",
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/Property"
+              }
+            }
+          },
+          "required": true
+        },
+        "responses": {
+          "200": {
+            "description": "Successful operation",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Message"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Invalid Data",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Message"
+                }
+              }
+            }
+          }
+        },
+        "x-codegen-request-body-name": "body"
+      }
+    },
+    "/properties/{id}": {
+      "get": {
+        "tags": [
+          "property"
+        ],
+        "summary": "Find a property by ID",
+        "description": "Returns a single property",
+        "operationId": "getPropertyById",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "description": "ID of the property to return",
+            "required": true,
+            "schema": {
+              "type": "integer",
+              "format": "int64"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successful operation",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Property"
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "Invalid ID",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Message"
+                }
+              }
+            }
+          }
+        }
+      },
+      "delete": {
+        "tags": [
+          "property"
+        ],
+        "summary": "Deletes a property",
+        "operationId": "deleteProperty",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "description": "ID of the property to delete",
+            "required": true,
+            "schema": {
+              "type": "integer",
+              "format": "int64"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successful operation",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Message"
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "Invalid ID",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Message"
+                }
+              }
+            }
+          }
+        }
+      }
+    }
+  },
+  "components": {
+    "schemas": {
+      "Message": {
+        "type": "object",
+        "properties": {
+          "message": {
+            "type": "string",
+            "description": "The return message"
+          }
+        }
+      },
+      "Property": {
+        "type": "object",
+        "properties": {
+          "id": {
+            "type": "integer",
+            "description": "The property id"
+          },
+          "address": {
+            "type": "string",
+            "description": "The address of the property"
+          },
+          "city": {
+            "type": "string",
+            "description": "The city the property is located in"
+          },
+          "state": {
+            "type": "string",
+            "description": "The state the property is located in"
+          },
+          "zip": {
+            "type": "string",
+            "description": "The zip code"
+          }
+        }
+      },
+      "PropertyList": {
+        "type": "object",
+        "properties": {
+          "propertylist": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/Property"
+            }
+          }
+        }
+      }
+    }
+  }
+}
