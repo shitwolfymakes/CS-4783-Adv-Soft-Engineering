@@ -87,7 +87,7 @@ def add_property():
 def id_property(property_id):
     try:
         property_id = int(property_id)
-        if (not isinstance(property_id, int)):
+        if not isinstance(property_id, int):
             return prepare_response("message", "ID is not an integer"), status.HTTP_400_BAD_REQUEST
     except ValueError:
         return prepare_response("message", "ID is not an integer"), status.HTTP_400_BAD_REQUEST
@@ -135,25 +135,25 @@ def id_property(property_id):
                 req_data = request.get_json(force=True)
                 for ans in req_data:
                     # print (ans) to test, allows optional arguments
-                    if (ans == ('address')):
+                    if ans == 'address':
                         address = req_data['address']
-                        if (1 <= len(address) <= 200):
+                        if 1 <= len(address) <= 200:
                             cur.execute("UPDATE tbl_property SET address = %s WHERE ID = %s", (address, property_id))
                             conn.commit()
-                    if (ans == ('state')):
+                    if ans == 'state':
                         state = req_data['state']
-                        if (len(state) == 2):
+                        if len(state) == 2:
                             cur.execute("UPDATE tbl_property SET state = %s WHERE ID = %s", (state, property_id))
                             conn.commit()
-                    if (ans == ('city')):
+                    if ans == 'city':
                         city = req_data['city']
-                        if (1 <= len(city) <= 50):
+                        if 1 <= len(city) <= 50:
                             cur.execute("UPDATE tbl_property SET city = %s WHERE ID = %s", (city, property_id))
                             conn.commit()
-                    if (ans == ('zip')):
-                        zip = req_data['zip']
-                        if (5 <= len(zip) <= 10):
-                            cur.execute("UPDATE tbl_property SET zip = %s WHERE ID = %s", (zip, property_id))
+                    if ans == 'zip':
+                        zip_code = req_data['zip']
+                        if 5 <= len(zip_code) <= 10:
+                            cur.execute("UPDATE tbl_property SET zip = %s WHERE ID = %s", (zip_code, property_id))
                             conn.commit()
                 return prepare_response("message", "updated"), status.HTTP_200_OK
             except Exception as e:
