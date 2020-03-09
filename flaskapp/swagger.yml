@@ -10,6 +10,9 @@ tags:
   description: Returns a hello message
 - name: property
   description: Access to property data
+schemes:
+- "https"
+- "http"
 paths:
   /hello:
     get:
@@ -41,6 +44,13 @@ paths:
         - property
       summary: Add a property
       operationId: addProperty
+      parameters:
+      - in: "header"
+        name: "X-Api-Key"
+        description: "The API key"
+        required: true
+        schema:
+          $ref: '#/components/schemas/APIKey'
       requestBody:
         description: The property to be added
         content:
@@ -84,8 +94,14 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/Property'
-        404:
+        400:
           description: Invalid ID
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Message'
+        404:
+          description: ID not found
           content:
             application/json:
               schema:
@@ -96,6 +112,12 @@ paths:
       summary: Deletes a property
       operationId: deleteProperty
       parameters:
+      - in: "header"
+        name: "X-Api-Key"
+        description: "The API key"
+        required: true
+        schema:
+          $ref: '#/components/schemas/APIKey'
       - name: id
         in: path
         description: ID of the property to delete
@@ -106,6 +128,54 @@ paths:
       responses:
         200:
           description: Successful operation
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Message'
+        400:
+          description: Invalid ID
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Message'
+        404:
+          description: ID not found
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Message'
+    put:
+      tags:
+      - property
+      summary: "Update an existing property"
+      description: ""
+      operationId: "updateProperty"
+      consumes:
+      - "application/json"
+      produces:
+      - "application/json"
+      parameters:
+      - in: "header"
+        name: "X-Api-Key"
+        description: "The API key"
+        required: true
+        schema:
+          $ref: '#/components/schemas/APIKey'
+      responses:
+        200:
+          description: Successful operation
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Message'
+        400:
+          description: Invalid ID
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Message'
+        401:
+          description: Unauthorized
           content:
             application/json:
               schema:
@@ -149,3 +219,6 @@ components:
           type: array
           items:
             $ref: '#/components/schemas/Property'
+    APIKey:
+      type: string
+      description: The string containing the API key
