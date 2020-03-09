@@ -1,4 +1,5 @@
 from flask import Flask
+from flask_cors import CORS
 
 from flask_swagger_ui import get_swaggerui_blueprint
 from routes import register_views
@@ -20,6 +21,7 @@ def main():
     app.register_blueprint(swaggerui_blueprint, url_prefix=swagger_url)
 
     register_views(app)     # registration needs to happen before running the app
+    CORS(app)   # enabling CORS requests
     app.run()
 #end main
 
