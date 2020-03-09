@@ -1,3 +1,5 @@
+import sys
+
 from flask import Flask
 from flask_cors import CORS
 
@@ -6,6 +8,9 @@ from routes import register_views
 
 
 def main():
+    using_https = False
+    if "--cert=adhoc" in sys.argv:
+        using_https = True
     app = Flask(__name__)
 
     ### start swagger boilerplate ###
@@ -22,7 +27,10 @@ def main():
 
     register_views(app)     # registration needs to happen before running the app
     CORS(app)   # enabling CORS requests
-    app.run()
+    if using_https:
+        app.run(ssl_context='adhoc')
+    else:
+        app.run()
 #end main
 
 

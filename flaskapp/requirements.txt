@@ -6,4 +6,4 @@ Werkzeug==1.0.0
 flask_cors==3.0.7
 flask-swagger-ui==3.25.0
 requests==2.23.0
-flasgger==0.9.4
+pyopenssl==19.1.0
