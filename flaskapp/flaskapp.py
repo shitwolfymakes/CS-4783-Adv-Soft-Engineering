@@ -28,9 +28,9 @@ def main():
     register_views(app)     # registration needs to happen before running the app
     CORS(app)   # enabling CORS requests
     if using_https:
-        app.run(ssl_context='adhoc')
+        app.run(host="0.0.0.0", port=12137, ssl_context='adhoc')
     else:
-        app.run()
+        app.run(host="0.0.0.0", port=12137)
 #end main
 
 

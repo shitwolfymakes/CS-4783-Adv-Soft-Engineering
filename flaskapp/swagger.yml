@@ -4,7 +4,7 @@ info:
   description: A flask app for Robinson's CS 4783
   version: 1.0.0
 servers:
-- url: http://127.0.0.1:5000/hello
+- url: https://cs47831.fulgentcorp.com:12137/
 tags:
 - name: hello
   description: Returns a hello message
