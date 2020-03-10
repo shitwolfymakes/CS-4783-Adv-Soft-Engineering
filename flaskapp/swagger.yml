@@ -151,11 +151,14 @@ paths:
       summary: "Update an existing property"
       description: ""
       operationId: "updateProperty"
-      consumes:
-      - "application/json"
-      produces:
-      - "application/json"
       parameters:
+      - name: id
+        in: path
+        description: ID of the property to return
+        required: true
+        schema:
+          type: integer
+          format: int64
       - in: "header"
         name: "X-Api-Key"
         description: "The API key"

@@ -7,6 +7,9 @@
   },
   "servers": [
     {
+      "url": "https://cs47831.fulgentcorp.com:12137/"
+    },
+    {
       "url": "http://127.0.0.1:5000"
     }
   ],
@@ -240,15 +243,6 @@
         "operationId": "updateProperty",
         "parameters": [
           {
-            "in": "header",
-            "name": "X-Api-Key",
-            "description": "The API key",
-            "required": true,
-            "schema": {
-              "$ref": "#/components/schemas/APIKey"
-            }
-          },
-          {
             "name": "id",
             "in": "path",
             "description": "ID of the property to return",
@@ -256,6 +250,15 @@
             "schema": {
               "type": "integer",
               "format": "int64"
+            }
+          },
+          {
+            "in": "header",
+            "name": "X-Api-Key",
+            "description": "The API key",
+            "required": true,
+            "schema": {
+              "$ref": "#/components/schemas/APIKey"
             }
           }
         ],
