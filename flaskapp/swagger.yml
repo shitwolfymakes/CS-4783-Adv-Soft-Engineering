@@ -167,6 +167,13 @@ paths:
         required: true
         schema:
           $ref: '#/components/schemas/APIKey'
+      requestBody:
+        description: The property to be updated
+        content:
+          application/json:
+            schema:
+              $ref: '#components/schemas/Property'
+        required: true
       responses:
         200:
           description: Successful operation
