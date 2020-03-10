@@ -10,6 +10,12 @@
       "url": "https://cs47831.fulgentcorp.com:12137/"
     },
     {
+      "url": "https://127.0.0.1:12137"
+    },
+    {
+      "url": "http://cs47831.fulgentcorp.com:12137/"
+    },
+    {
       "url": "http://127.0.0.1:12137"
     }
   ],
