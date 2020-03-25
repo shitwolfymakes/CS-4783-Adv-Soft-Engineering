@@ -19,13 +19,13 @@ def prepare_response(tag, msg):
 @bp.route('/properties', methods=['GET', 'POST'])
 def add_property():
     if request.method == 'GET':
-        _handle_add_property_get(request)
+        _handle_add_property_get()
     elif request.method == 'POST':
-        _handle_add_property_post(request)
+        _handle_add_property_post()
 #end add_property
 
 
-def _handle_add_property_get(req):
+def _handle_add_property_get():
     cur = None
     conn = None
     try:
@@ -47,7 +47,7 @@ def _handle_add_property_get(req):
 #end _handle_add_property_get
 
 
-def _handle_add_property_post(req):
+def _handle_add_property_post():
     headers = request.headers
     auth = headers.get("X-Api-Key")
     if auth == 'cs4783FTW':
