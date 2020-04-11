@@ -61,7 +61,7 @@ def _handle_add_property_post():
             cur = None
             conn = None
             try:
-                sql = "INSERT INTO tbl_property(ID, address, city, state, zip) VALUES(NULL, %s, %s, %s, %s)"
+                sql = "INSERT INTO tbl_property(ID, address, city, state, zip) VALUES(NULL, , %s, %s, %s)"
                 data = (address, city, state, zip_code)
                 gateway = DBGateway()
                 conn = gateway.get_connection()
