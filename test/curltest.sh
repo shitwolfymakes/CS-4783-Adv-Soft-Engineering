@@ -67,20 +67,20 @@ if [ $FOUND = 0 ]; then
 fi
 
 #TEST5 get the previously updated property
-curl --silent -k -X GET "https://cs47832.fulgentcorp.com:12137/properties/1" > actual.txt
+curl --silent -k -X GET "https://cs47832.fulgentcorp.com:12137/properties/$OLDESTRECORD" > actual.txt
 if grep "\[{\"ID\":1,\"address\":\"123 Test ave\",\"city\":\"New York\",\"state\":\"NY\",\"zip\":\"899999\"}\]" actual.txt; then
     let FOUND=1
 else
     let FOUND=0
 fi
 if [ $FOUND = 0 ]; then
-    echo "CURL TEST ERROR: get properties 1 failed"
+    echo "CURL TEST ERROR: get properties $OLDESTRECORD failed"
     #kill -KILL $last_pid
     exit 1
 fi
 
 #TEST6 put attempt without key header test
-curl --silent -k -X PUT "https://cs47832.fulgentcorp.com:12137/properties/1" \
+curl --silent -k -X PUT "https://cs47832.fulgentcorp.com:12137/properties/$OLDESTRECORD" \
 --data-raw '{"address": "123 Not Gonna Work", "city": "New York", "state": "NY", "zip": "999999"}' >actual.txt
 if grep "{\"message\":\"ERROR: Unauthorized\"}" actual.txt; then
     let FOUND=1
@@ -88,13 +88,13 @@ else
     let FOUND=0
 fi
 if [ $FOUND = 0 ]; then
-    echo "CURL TEST ERROR: put properties 1 w/o key failed to return expected error message"
+    echo "CURL TEST ERROR: put properties $OLDESTRECORD w/o key failed to return expected error message"
     #kill -KILL $last_pid
     exit 1
 fi
 
 #TEST7 put attempt only updating one field
-curl --silent -k -X PUT "https://cs47832.fulgentcorp.com:12137/properties/1" \
+curl --silent -k -X PUT "https://cs47832.fulgentcorp.com:12137/properties/$OLDESTRECORD" \
 --header 'x-api-key: cs4783FTW' \
 --data-raw '{"address": "123 Updated Version"}' >actual.txt
 if grep "\[{\"message\":\"updated\"}\]" actual.txt; then
@@ -103,7 +103,7 @@ else
     let FOUND=0
 fi
 if [ $FOUND = 0 ]; then
-    echo "CURL TEST ERROR: put properties 1 update only one field"
+    echo "CURL TEST ERROR: put properties $OLDESTRECORD update only one field"
     #kill -KILL $last_pid
     exit 1
 fi
@@ -112,14 +112,14 @@ fi
 curl --silent -k -X POST "https://cs47832.fulgentcorp.com:12137/properties" \
 --header 'x-api-key: cs4783FTW' \
 --data-raw '{"address": "123 Test ave", "city": "New York", "state": "NY", "zip": "899999"}'
-curl --silent -k -X DELETE "https://cs47832.fulgentcorp.com:12137/properties/2" >actual.txt
+curl --silent -k -X DELETE "https://cs47832.fulgentcorp.com:12137/properties/$OLDESTRECORD" >actual.txt
 if grep "{\"message\":\"ERROR: Unauthorized\"}" actual.txt; then
     let FOUND=1
 else
     let FOUND=0
 fi
 if [ $FOUND = 0 ]; then
-    echo "CURL TEST ERROR: Delete properties 2 Unauthorized"
+    echo "CURL TEST ERROR: Delete properties $OLDESTRECORD Unauthorized"
     #kill -KILL $last_pid
     exit 1
 fi
