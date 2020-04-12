@@ -7,10 +7,11 @@ let KILL=9
 #node ./app.js &
 #last_pid=$!
 #sleep 2
-#rm -Rf actual.txt
+rm -Rf actual.txt
 
 #TEST1 check hello
 curl --silent -k -X GET "https://cs47832.fulgentcorp.com:12137/hello" > actual.txt
+cat actual.txt
 if grep "\[{\"message\":\"hello yourself\"}\]" actual.txt; then
     let FOUND=1
 else
