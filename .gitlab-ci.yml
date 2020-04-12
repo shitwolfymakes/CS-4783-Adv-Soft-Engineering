@@ -23,6 +23,7 @@ unit-test:
     - pip install flake8
     - pip install pytest
     - pip install pytest-cov
+    - pip install requests
     - chmod +x test/unit/test_properties.py
     - pytest -v test/unit/test_properties.py
 
