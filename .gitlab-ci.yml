@@ -5,9 +5,16 @@ stages :
 
 build-job:
   stage: build
-  script: echo "building"
+  script: echo "building & installing dependencies"
 
-test-job:
+unit-test:
+  stage: test
+  script:
+    - echo "Running unit tests"
+    - chmod +x test/unit/test_properties.py
+    - py.test -v test/unit/test_properties.py
+
+curl-test:
   stage: test
   script:
     - echo "Running curl tests"
@@ -16,4 +23,6 @@ test-job:
 
 deploy-job:
   stage: deploy
-  script: echo "deploying"
+  script:
+    - echo "Deploying"
+
