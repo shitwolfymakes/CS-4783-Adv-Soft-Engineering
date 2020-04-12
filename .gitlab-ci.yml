@@ -9,7 +9,7 @@ build-job:
 
 test-job:
   stage: test
-  script: echo "testing"
+  script: ./test/curltest.sh
 
 deploy-job:
   stage: deploy
