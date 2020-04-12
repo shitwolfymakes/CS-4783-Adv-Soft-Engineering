@@ -52,7 +52,7 @@ if [ $FOUND = 0 ]; then
 fi
 
 #TEST4 check put with all values
-curl --silent -k -X PUT "https://cs47832.fulgentcorp.com:12137/properties/1" \
+curl --silent -k -X PUT "https://cs47832.fulgentcorp.com:12137/properties/$OLDESTRECORD" \
 --header 'x-api-key: cs4783FTW' \
 --data-raw '{"address": "123 Test ave", "city": "New York", "state": "NY", "zip": "899999"}' > actual.txt
 if grep "\[{\"message\":\"updated\"}\]" actual.txt; then
@@ -61,7 +61,7 @@ else
     let FOUND=0
 fi
 if [ $FOUND = 0 ]; then
-    echo "CURL TEST ERROR: put properties 1 failed"
+    echo "CURL TEST ERROR: put properties $OLDESTRECORD failed"
     #kill -KILL $last_pid
     exit 1
 fi
