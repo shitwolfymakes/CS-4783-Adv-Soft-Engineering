@@ -22,6 +22,7 @@ if [ $FOUND = 0 ]; then
     exit 1
 fi
 
+
 #TEST2 check post
 curl --silent -k -X POST "https://cs47832.fulgentcorp.com:12137/properties" \
 --header 'x-api-key: cs4783FTW' \
@@ -37,6 +38,7 @@ if [ $FOUND = 0 ]; then
     exit 1
 fi
 
+
 #TEST3 check get list
 curl --silent -k -X GET "https://cs47832.fulgentcorp.com:12137/properties" > actual.txt
 OLDESTRECORD=`grep -oP '^[^0-9]*\K[0-9]+' actual.txt` #store the id of the oldest record
@@ -50,6 +52,7 @@ if [ $FOUND = 0 ]; then
     #kill -KILL $last_pid
     exit 1
 fi
+
 
 #TEST4 check put with all values
 curl --silent -k -X PUT "https://cs47832.fulgentcorp.com:12137/properties/$OLDESTRECORD" \
@@ -66,6 +69,7 @@ if [ $FOUND = 0 ]; then
     exit 1
 fi
 
+
 #TEST5 get the previously updated property
 curl --silent -k -X GET "https://cs47832.fulgentcorp.com:12137/properties/$OLDESTRECORD" > actual.txt
 if grep "\[{\"ID\":$OLDESTRECORD,\"address\":\"123 Test ave\",\"city\":\"New York\",\"state\":\"NY\",\"zip\":\"899999\"}\]" actual.txt; then
@@ -78,6 +82,7 @@ if [ $FOUND = 0 ]; then
     #kill -KILL $last_pid
     exit 1
 fi
+
 
 #TEST6 put attempt without key header test
 curl --silent -k -X PUT "https://cs47832.fulgentcorp.com:12137/properties/$OLDESTRECORD" \
@@ -93,6 +98,7 @@ if [ $FOUND = 0 ]; then
     exit 1
 fi
 
+
 #TEST7 put attempt only updating one field
 curl --silent -k -X PUT "https://cs47832.fulgentcorp.com:12137/properties/$OLDESTRECORD" \
 --header 'x-api-key: cs4783FTW' \
@@ -107,6 +113,7 @@ if [ $FOUND = 0 ]; then
     #kill -KILL $last_pid
     exit 1
 fi
+
 
 #TEST8 unauthorized delete
 curl --silent -k -X POST "https://cs47832.fulgentcorp.com:12137/properties" \
@@ -124,8 +131,8 @@ if [ $FOUND = 0 ]; then
     exit 1
 fi
 
+
 #TEST9 try to delete an existing property, authorized
-echo $OLDESTRECORD
 curl --silent -k -X DELETE "https://cs47832.fulgentcorp.com:12137/properties/$OLDESTRECORD" \
 --header 'x-api-key: cs4783FTW' > actual.txt
 if grep "\[{\"message\":\"deleted\"}\]" actual.txt; then
@@ -138,6 +145,7 @@ if [ $FOUND = 0 ]; then
     #kill -KILL $last_pid
     exit 1
 fi
+
 
 #TEST10 provide non int ID
 curl --silent -k -X GET "https://cs47832.fulgentcorp.com:12137/properties/one" > actual.txt
