@@ -118,11 +118,11 @@ def id_property_get(property_id):
             cur.close()
             conn.close()
         # end try/except/finally
-#end properties property_id
+#end id_property_get
 
 
 @bp.route('/properties/<property_id>', methods=['DELETE'])
-def id_property_delete_get(property_id):
+def id_property_delete(property_id):
     try:
         property_id = int(property_id)
         if not isinstance(property_id, int):
