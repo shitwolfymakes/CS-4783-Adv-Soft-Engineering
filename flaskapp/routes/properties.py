@@ -96,128 +96,113 @@ def id_property(property_id):
     #end try/catch
     
     if request.method == 'GET':
-        _handle_id_property_get(property_id)
+        cur = None
+        conn = None
+        try:
+            gateway = DBGateway()
+            conn = gateway.get_connection()
+            cur = conn.cursor(pymysql.cursors.DictCursor)
+
+            # check to see if the property exists
+            cur.execute("SELECT * FROM tbl_property WHERE ID=%s", property_id)
+            rows = cur.fetchall()
+            if not rows:
+                return prepare_response("message", "ID does not exist in database."), status.HTTP_404_NOT_FOUND
+
+            response = jsonify(rows)
+            response.status_code = 200
+            return response
+        except Exception as e:
+            print(e)
+        finally:
+            cur.close()
+            conn.close()
+        # end try/except/finally
     elif request.method == 'DELETE':
-        _handle_id_property_delete(property_id)
+        headers = request.headers
+        auth = headers.get("X-Api-Key")
+        if auth == 'cs4783FTW':
+            cur = None
+            conn = None
+            try:
+                gateway = DBGateway()
+                conn = gateway.get_connection()
+                cur = conn.cursor(pymysql.cursors.DictCursor)
+
+                # check to see if the property exists
+                cur.execute("SELECT * FROM tbl_property WHERE ID=%s", property_id)
+                rows = cur.fetchall()
+                if not rows:
+                    return prepare_response("message", "ID does not exist in database."), status.HTTP_404_NOT_FOUND
+
+                # delete the property if it does
+                cur.execute("DELETE FROM tbl_property WHERE ID=%s", property_id)
+                conn.commit()
+                return prepare_response("message", "deleted"), status.HTTP_200_OK
+            except Exception as e:
+                print(e)
+            finally:
+                cur.close()
+                conn.close()
+            # end try/except/finally
+        else:
+            return jsonify({"message": "ERROR: Unauthorized"}), 401
+        # end if/else
     elif request.method == 'PUT':
-        _handle_id_property_put(property_id)
+        headers = request.headers
+        auth = headers.get("X-Api-Key")
+        if auth == 'cs4783FTW':
+            # req_data = request.get_json(force=True)
+            cur = None
+            conn = None
+            try:
+                gateway = DBGateway()
+                conn = gateway.get_connection()
+                cur = conn.cursor(pymysql.cursors.DictCursor)
+
+                # check to see if the property exists
+                cur.execute("SELECT * FROM tbl_property WHERE ID=%s", property_id)
+                rows = cur.fetchall()
+                if not rows:
+                    return prepare_response("message", "ID does not exist in database."), status.HTTP_404_NOT_FOUND
+
+                # update the property if it does
+                req_data = request.get_json(force=True)
+                for ans in req_data:
+                    # print (ans) to test, allows optional arguments
+                    if ans == 'address':
+                        address = req_data['address']
+                        if 1 <= len(address) <= 200:
+                            cur.execute("UPDATE tbl_property SET address = %s WHERE ID = %s", (address, property_id))
+                            conn.commit()
+                    if ans == 'state':
+                        state = req_data['state']
+                        if len(state) == 2:
+                            cur.execute("UPDATE tbl_property SET state = %s WHERE ID = %s", (state, property_id))
+                            conn.commit()
+                    if ans == 'city':
+                        city = req_data['city']
+                        if 1 <= len(city) <= 50:
+                            cur.execute("UPDATE tbl_property SET city = %s WHERE ID = %s", (city, property_id))
+                            conn.commit()
+                    if ans == 'zip':
+                        zip_code = req_data['zip']
+                        if 5 <= len(zip_code) <= 10:
+                            cur.execute("UPDATE tbl_property SET zip = %s WHERE ID = %s", (zip_code, property_id))
+                            conn.commit()
+                # end for
+                return prepare_response("message", "updated"), status.HTTP_200_OK
+            except Exception as e:
+                print(e)
+            finally:
+                cur.close()
+                conn.close()
+            # end try/except/finally
+        else:
+            return jsonify({"message": "ERROR: Unauthorized"}), 401
+        # end if/else
     #end if/elif
 #end properties property_id
-
-
-def _handle_id_property_get(property_id):
-    cur = None
-    conn = None
-    try:
-        gateway = DBGateway()
-        conn = gateway.get_connection()
-        cur = conn.cursor(pymysql.cursors.DictCursor)
-
-        # check to see if the property exists
-        cur.execute("SELECT * FROM tbl_property WHERE ID=%s", property_id)
-        rows = cur.fetchall()
-        if not rows:
-            return prepare_response("message", "ID does not exist in database."), status.HTTP_404_NOT_FOUND
-
-        response = jsonify(rows)
-        response.status_code = 200
-        return response
-    except Exception as e:
-        print(e)
-    finally:
-        cur.close()
-        conn.close()
-    # end try/except/finally
-#end _handle_id_property_get
-
-
-def _handle_id_property_delete(property_id):
-    headers = request.headers
-    auth = headers.get("X-Api-Key")
-    if auth == 'cs4783FTW':
-        cur = None
-        conn = None
-        try:
-            gateway = DBGateway()
-            conn = gateway.get_connection()
-            cur = conn.cursor(pymysql.cursors.DictCursor)
-
-            # check to see if the property exists
-            cur.execute("SELECT * FROM tbl_property WHERE ID=%s", property_id)
-            rows = cur.fetchall()
-            if not rows:
-                return prepare_response("message", "ID does not exist in database."), status.HTTP_404_NOT_FOUND
-
-            # delete the property if it does
-            cur.execute("DELETE FROM tbl_property WHERE ID=%s", property_id)
-            conn.commit()
-            return prepare_response("message", "deleted"), status.HTTP_200_OK
-        except Exception as e:
-            print(e)
-        finally:
-            cur.close()
-            conn.close()
-        # end try/except/finally
-    else:
-        return jsonify({"message": "ERROR: Unauthorized"}), 401
-    # end if/else
-#end _handle_id_property_delete
-
-
-def _handle_id_property_put(property_id):
-    headers = request.headers
-    auth = headers.get("X-Api-Key")
-    if auth == 'cs4783FTW':
-        # req_data = request.get_json(force=True)
-        cur = None
-        conn = None
-        try:
-            gateway = DBGateway()
-            conn = gateway.get_connection()
-            cur = conn.cursor(pymysql.cursors.DictCursor)
-
-            # check to see if the property exists
-            cur.execute("SELECT * FROM tbl_property WHERE ID=%s", property_id)
-            rows = cur.fetchall()
-            if not rows:
-                return prepare_response("message", "ID does not exist in database."), status.HTTP_404_NOT_FOUND
-
-            # update the property if it does
-            req_data = request.get_json(force=True)
-            for ans in req_data:
-                # print (ans) to test, allows optional arguments
-                if ans == 'address':
-                    address = req_data['address']
-                    if 1 <= len(address) <= 200:
-                        cur.execute("UPDATE tbl_property SET address = %s WHERE ID = %s", (address, property_id))
-                        conn.commit()
-                if ans == 'state':
-                    state = req_data['state']
-                    if len(state) == 2:
-                        cur.execute("UPDATE tbl_property SET state = %s WHERE ID = %s", (state, property_id))
-                        conn.commit()
-                if ans == 'city':
-                    city = req_data['city']
-                    if 1 <= len(city) <= 50:
-                        cur.execute("UPDATE tbl_property SET city = %s WHERE ID = %s", (city, property_id))
-                        conn.commit()
-                if ans == 'zip':
-                    zip_code = req_data['zip']
-                    if 5 <= len(zip_code) <= 10:
-                        cur.execute("UPDATE tbl_property SET zip = %s WHERE ID = %s", (zip_code, property_id))
-                        conn.commit()
-            #end for
-            return prepare_response("message", "updated"), status.HTTP_200_OK
-        except Exception as e:
-            print(e)
-        finally:
-            cur.close()
-            conn.close()
-        # end try/except/finally
-    else:
-        return jsonify({"message": "ERROR: Unauthorized"}), 401
-    # end if/else
-#end _handle_id_property_delete
 
 
 @bp.errorhandler(404)
