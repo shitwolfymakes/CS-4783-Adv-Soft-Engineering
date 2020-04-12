@@ -19,74 +19,70 @@ def prepare_response(tag, msg):
 @bp.route('/properties', methods=['GET', 'POST'])
 def add_property():
     if request.method == 'GET':
-        _handle_add_property_get()
+        cur = None
+        conn = None
+        try:
+            gateway = DBGateway()
+            conn = gateway.get_connection()
+            cur = conn.cursor(pymysql.cursors.DictCursor)
+            sql = "SELECT * FROM tbl_property"
+            cur.execute(sql)
+            rows = cur.fetchall()
+            response = jsonify(rows)
+            response.status_code = 200
+            return response
+        except Exception as e:
+            print(e)
+        finally:
+            cur.close()
+            conn.close()
+        # end try/except/finally
     elif request.method == 'POST':
-        _handle_add_property_post()
+        headers = request.headers
+        auth = headers.get("X-Api-Key")
+        if auth == 'cs4783FTW':
+            req_data = request.get_json(force=True)
+            address = req_data['address']
+            city = req_data['city']
+            state = req_data['state']
+            zip_code = req_data['zip']
+
+            if 1 <= len(address) <= 200 and len(state) == 2 and 1 <= len(city) <= 50 and 5 <= len(zip_code) <= 10:
+                cur = None
+                conn = None
+                try:
+                    sql = "INSERT INTO tbl_property(ID, address, city, state, zip) VALUES(NULL, %s, %s, %s, %s)"
+                    data = (address, city, state, zip_code)
+                    gateway = DBGateway()
+                    conn = gateway.get_connection()
+                    cur = conn.cursor()
+                    cur.execute(sql, data)
+                    conn.commit()
+                    return prepare_response("message", "added"), status.HTTP_200_OK
+                except Exception as e:
+                    print(e)
+                finally:
+                    cur.close()
+                    conn.close()
+                # end try/except/finally
+            # end if
+
+            if len(address) < 1 or len(address) > 200:
+                return prepare_response("message",
+                                        "address is not between 1 and 200 characters"), status.HTTP_400_BAD_REQUEST
+            if len(city) < 1 or len(city) > 50:
+                return prepare_response("message",
+                                        "city is not between 1 and 50 characters"), status.HTTP_400_BAD_REQUEST
+            if len(state) != 2:
+                return prepare_response("message", "state is not 2 characters"), status.HTTP_400_BAD_REQUEST
+            if len(zip_code) < 5 or len(zip_code) > 10:
+                return prepare_response("message",
+                                        "zip is not between 5 and 10 characters"), status.HTTP_400_BAD_REQUEST
+            # end if
+        else:
+            return jsonify({"message": "ERROR: Unauthorized"}), 401
+        # end if/else
 #end add_property
-
-
-def _handle_add_property_get():
-    cur = None
-    conn = None
-    try:
-        gateway = DBGateway()
-        conn = gateway.get_connection()
-        cur = conn.cursor(pymysql.cursors.DictCursor)
-        sql = "SELECT * FROM tbl_property"
-        cur.execute(sql)
-        rows = cur.fetchall()
-        response = jsonify(rows)
-        response.status_code = 200
-        return response
-    except Exception as e:
-        print(e)
-    finally:
-        cur.close()
-        conn.close()
-    # end try/except/finally
-#end _handle_add_property_get
-
-
-def _handle_add_property_post():
-    headers = request.headers
-    auth = headers.get("X-Api-Key")
-    if auth == 'cs4783FTW':
-        req_data = request.get_json(force=True)
-        address = req_data['address']
-        city = req_data['city']
-        state = req_data['state']
-        zip_code = req_data['zip']
-
-        if 1 <= len(address) <= 200 and len(state) == 2 and 1 <= len(city) <= 50 and 5 <= len(zip_code) <= 10:
-            cur = None
-            conn = None
-            try:
-                sql = "INSERT INTO tbl_property(ID, address, city, state, zip) VALUES(NULL, , %s, %s, %s)"
-                data = (address, city, state, zip_code)
-                gateway = DBGateway()
-                conn = gateway.get_connection()
-                cur = conn.cursor()
-                cur.execute(sql, data)
-                conn.commit()
-                return prepare_response("message", "added"), status.HTTP_200_OK
-            except Exception as e:
-                print(e)
-            finally:
-                cur.close()
-                conn.close()
-            # end try/except/finally
-        if len(address) < 1 or len(address) > 200:
-            return prepare_response("message", "address is not between 1 and 200 characters"), status.HTTP_400_BAD_REQUEST
-        if len(city) < 1 or len(city) > 50:
-            return prepare_response("message", "city is not between 1 and 50 characters"), status.HTTP_400_BAD_REQUEST
-        if len(state) != 2:
-            return prepare_response("message", "state is not 2 characters"), status.HTTP_400_BAD_REQUEST
-        if len(zip_code) < 5 or len(zip_code) > 10:
-            return prepare_response("message", "zip is not between 5 and 10 characters"), status.HTTP_400_BAD_REQUEST
-    else:
-        return jsonify({"message": "ERROR: Unauthorized"}), 401
-    # end if/else
-#end _handle_add_property_post
 
 
 @bp.route('/properties/<property_id>', methods=['GET', 'DELETE', 'PUT'])
