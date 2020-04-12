@@ -14,6 +14,7 @@ def prepare_response(tag, msg):
             tag: msg
     }]
     return jsonify(response)
+#end prepare_response
 
 
 @bp.route("/hello")
