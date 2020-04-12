@@ -7,8 +7,8 @@ build-job:
   stage: build
   script:
     - echo "building & installing dependencies"
-    - pip3 install --upgrade pip
-    - pip3 install --user -r requirements.txt
+    - pip install pytest
+    - pip install pytest-cov
     - pytest --version
 
 unit-test:
