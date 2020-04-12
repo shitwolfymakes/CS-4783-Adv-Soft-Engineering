@@ -5,7 +5,9 @@ stages :
 
 build-job:
   stage: build
-  script: echo "building & installing dependencies"
+  script:
+    - echo "building & installing dependencies"
+    - pip3 install -U pytest
 
 unit-test:
   stage: test
