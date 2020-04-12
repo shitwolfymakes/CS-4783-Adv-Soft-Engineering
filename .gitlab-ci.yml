@@ -24,6 +24,8 @@ unit-test:
     - pip install pytest
     - pip install pytest-cov
     - pip install requests
+    - pip install pymysql
+    - pip install json
     - chmod +x test/unit/test_properties.py
     - pytest -v test/unit/test_properties.py
 
