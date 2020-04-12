@@ -7,9 +7,10 @@ build-job:
   stage: build
   script:
     - echo "building & installing dependencies"
+    - pip install flake8
     - pip install pytest
     - pip install pytest-cov
-    - pytest --version
+
 
 unit-test:
   stage: test
