@@ -12,7 +12,7 @@ unit-test:
   script:
     - echo "Running unit tests"
     - chmod +x test/unit/test_properties.py
-    - py.test -v test/unit/test_properties.py
+    - pytest -v test/unit/test_properties.py
 
 curl-test:
   stage: test
