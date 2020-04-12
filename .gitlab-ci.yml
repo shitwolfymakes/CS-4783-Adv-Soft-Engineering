@@ -18,7 +18,11 @@ unit-test:
   stage: test
   script:
     - echo "Running unit tests"
+    - python3 -m venv venv
     - . venv/bin/activate
+    - pip install flake8
+    - pip install pytest
+    - pip install pytest-cov
     - chmod +x test/unit/test_properties.py
     - pytest -v test/unit/test_properties.py
 
