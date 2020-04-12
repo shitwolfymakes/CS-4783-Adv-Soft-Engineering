@@ -1,6 +1,4 @@
 #!/bin/bash
-echo "Running curl tests"
-
 let FOUND=0
 let KILL=9
 
