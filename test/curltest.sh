@@ -39,8 +39,7 @@ fi
 
 #TEST3 check get list
 curl --silent -k -X GET "https://cs47832.fulgentcorp.com:12137/properties" > actual.txt
-cat actual.txt
-echo `grep -oP '^[^0-9]*\K[0-9]+' actual.txt`
+OLDESTRECORD=`grep -oP '^[^0-9]*\K[0-9]+' actual.txt`
 echo $OLDESTRECORD
 exit 1
 if grep "\[{\"ID\"" actual.txt; then
