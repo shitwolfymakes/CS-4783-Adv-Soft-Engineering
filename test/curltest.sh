@@ -124,7 +124,7 @@ if [ $FOUND = 0 ]; then
 fi
 
 #TEST9 try to delete an existing property, authorized
-curl --silent -k -X DELETE "https://cs47832.fulgentcorp.com:12137/properties/2" \
+curl --silent -k -X DELETE "https://cs47832.fulgentcorp.com:12137/properties/1" \
 --header 'x-api-key: cs4783FTW' >actual.txt
 if grep "\[{\"message\":\"deleted\"}\]" actual.txt; then
     let FOUND=1
@@ -132,7 +132,7 @@ else
     let FOUND=0
 fi
 if [ $FOUND = 0 ]; then
-    echo "CURL TEST ERROR: Delete properties 2"
+    echo "CURL TEST ERROR: Delete properties 1"
     #kill -KILL $last_pid
     exit 1
 fi
