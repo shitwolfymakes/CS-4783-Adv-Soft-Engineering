@@ -68,7 +68,7 @@ fi
 
 #TEST5 get the previously updated property
 curl --silent -k -X GET "https://cs47832.fulgentcorp.com:12137/properties/$OLDESTRECORD" > actual.txt
-if grep "\[{\"ID\":1,\"address\":\"123 Test ave\",\"city\":\"New York\",\"state\":\"NY\",\"zip\":\"899999\"}\]" actual.txt; then
+if grep "\[{\"ID\":$OLDESTRECORD,\"address\":\"123 Test ave\",\"city\":\"New York\",\"state\":\"NY\",\"zip\":\"899999\"}\]" actual.txt; then
     let FOUND=1
 else
     let FOUND=0
