@@ -8,6 +8,7 @@ build-job:
   script:
     - echo "building & installing dependencies"
     - pip3 install --user -r requirements.txt
+    - pytest --version
 
 unit-test:
   stage: test
