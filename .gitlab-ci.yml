@@ -7,6 +7,7 @@ build-job:
   stage: build
   script:
     - echo "building & installing dependencies"
+    - pip3 --update
     - pip3 install --user -r requirements.txt
     - pytest --version
 
