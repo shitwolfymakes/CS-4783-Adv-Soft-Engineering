@@ -39,9 +39,7 @@ fi
 
 #TEST3 check get list
 curl --silent -k -X GET "https://cs47832.fulgentcorp.com:12137/properties" > actual.txt
-OLDESTRECORD=`grep -oP '^[^0-9]*\K[0-9]+' actual.txt`
-echo $OLDESTRECORD
-exit 1
+OLDESTRECORD=`grep -oP '^[^0-9]*\K[0-9]+' actual.txt` #store the id of the oldest record
 if grep "\[{\"ID\"" actual.txt; then
     let FOUND=1
 else
@@ -127,15 +125,16 @@ if [ $FOUND = 0 ]; then
 fi
 
 #TEST9 try to delete an existing property, authorized
-curl --silent -k -X DELETE "https://cs47832.fulgentcorp.com:12137/properties/1" \
---header 'x-api-key: cs4783FTW' >actual.txt
+echo $OLDESTRECORD
+curl --silent -k -X DELETE "https://cs47832.fulgentcorp.com:12137/properties/$OLDESTRECORD" \
+--header 'x-api-key: cs4783FTW' > actual.txt
 if grep "\[{\"message\":\"deleted\"}\]" actual.txt; then
     let FOUND=1
 else
     let FOUND=0
 fi
 if [ $FOUND = 0 ]; then
-    echo "CURL TEST ERROR: Delete properties 1"
+    echo "CURL TEST ERROR: Delete property $OLDESTRECORD"
     #kill -KILL $last_pid
     exit 1
 fi
