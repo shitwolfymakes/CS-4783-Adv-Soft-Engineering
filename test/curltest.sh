@@ -11,7 +11,9 @@ rm -Rf actual.txt
 
 #TEST1 check hello
 curl --silent -k -X GET "https://cs47832.fulgentcorp.com:12137/hello" > actual.txt
-cat actual.txt
+let OLDESTRECORD=`grep -E '[[:digit:]]' actual.txt`
+echo $OLDESTRECORD
+exit 1
 if grep "\[{\"message\":\"hello yourself\"}\]" actual.txt; then
     let FOUND=1
 else
