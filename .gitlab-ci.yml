@@ -43,7 +43,6 @@ deploy-job:
     - '[[ -f /.dockerenv ]] && echo -e "Host *\n\tStrictHostKeyChecking no\n\n" > ~/.ssh/config'
   script:
     - echo "Deploying"
-    - sed -n ‘3,+1p’ ~/.ssh/known_hosts > known_hosts
     - ssh -v -o "UserKnownHostsFile=./known_hosts" fcv973@cs47832.fulgentcorp.com
 
 
