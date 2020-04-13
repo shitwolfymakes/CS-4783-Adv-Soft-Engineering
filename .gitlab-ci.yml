@@ -46,5 +46,8 @@ deploy-job:
     - echo "$SSH2_PRIVATE_KEY" > key.txt # use " so newlines are preserved
     - chmod 600 key.txt
     - scp -i key.txt -r ./flaskapp/* fcv973@cs47832.fulgentcorp.com/assignment3
-    - echo "$SSH2_PRIVATE_KEY"
+    - echo "$MY_KEY" > key.txt # use " so newlines are preserved
+    - chmod 600 key.txt
+    - scp -i key.txt -r ./flaskapp/* fcv973@cs47832.fulgentcorp.com/assignment3
+
 
