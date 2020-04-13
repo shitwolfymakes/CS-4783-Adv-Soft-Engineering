@@ -43,7 +43,6 @@ deploy-job:
     - '[[ -f /.dockerenv ]] && echo -e "Host *\n\tStrictHostKeyChecking no\n\n" > ~/.ssh/config'
   script:
     - echo "Deploying"
-    - ssh-add <(echo "$PRIVATE_KEY")
-    - ssh fcv973@cs47832.fulgentcorp.com
+    - ssh -v fcv973@cs47832.fulgentcorp.com
 
 
