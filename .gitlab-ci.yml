@@ -13,13 +13,6 @@ build-job:
     - pip install pytest
     - pip install pytest-cov
 
-before_script:
-  # Setup SSH deploy keys
-  - 'which ssh-agent || ( apt-get install -qq openssh-client )'
-  - eval $(ssh-agent -s)
-  - ssh-add <(echo "$SSH_PRIVATE_KEY")
-  - mkdir -p ~/.ssh
-
 unit-test:
   stage: test
   script:
@@ -45,4 +38,7 @@ deploy-job:
   stage: deploy
   script:
     - echo "Deploying"
+    - ssh-add <(echo "$SSH2_PRIVATE_KEY")
+    - ssh fcv973@cs47832.fulgentcorp.com
+
 
