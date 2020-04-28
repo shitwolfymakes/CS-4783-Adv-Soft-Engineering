@@ -5,9 +5,29 @@ stages :
 
 build-job:
   stage: build
-  script: echo "building"
+  script:
+    - echo "building & installing dependencies"
+    - python3 -m venv venv
+    - . venv/bin/activate
+    - pip install flake8
+    - pip install pytest
+    - pip install pytest-cov
 
-test-job:
+unit-test:
+  stage: test
+  script:
+    - echo "Running unit tests"
+    - python3 -m venv venv
+    - . venv/bin/activate
+    - pip install flake8
+    - pip install pytest
+    - pip install pytest-cov
+    - pip install requests
+    - pip install pymysql
+    - chmod +x test/unit/test_properties.py
+    - pytest -v test/unit/test_properties.py
+
+curl-test:
   stage: test
   script:
     - echo "Running curl tests"
@@ -16,4 +36,16 @@ test-job:
 
 deploy-job:
   stage: deploy
-  script: echo "deploying"
+  #before_script:
+  #  - 'which ssh-agent || ( apt-get update -y && apt-get install openssh-client -y )'
+  #  - mkdir -p ~/.ssh
+  #  - eval $(ssh-agent -s)
+  #  - '[[ -f /.dockerenv ]] && echo -e "Host *\n\tStrictHostKeyChecking no\n\n" > ~/.ssh/config'
+  script:
+    - echo "Deploying"
+    - echo "$MY_KEY_2_PRIVATE" > mykey.txt # use " so newlines are preserved
+    - chmod 600 mykey.txt
+    - scp -i mykey.txt -r ./* fcv973@cs47832.fulgentcorp.com:assignment3
+
+
+
