@@ -6,12 +6,12 @@ ENV STATIC_URL /static
 ENV STATIC_PATH /cs4783-adv-software-eng-assignments/flaskapp/static
 
 #flaskapp directory
-WORKDIR /flaskapp
+WORKDIR /flaskapp/api
 
 COPY ./requirements.txt ./
 #install reqs
 RUN pip install -r requirements.txt
 
-COPY . /flaskapp
+COPY . /flaskapp/api
 ENTRYPOINT ["python3"]
 CMD ["flaskapp.py"]

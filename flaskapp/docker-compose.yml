@@ -1,0 +1,19 @@
+version: "3"
+services:
+    mysqldb:
+        build: .
+        image: mysql:8.0.17
+        environment:
+            MYSQL_USER: mysql
+            MYSQL_PASSWORD: assignmentFive
+            MYSQL_DATABASE: tbl_properties_test
+        ports:
+            - "12136:12136"
+        container_name: mysqldb
+    flaskapp:
+        build: api/.
+        ports:
+            - "12137:12137"
+        container_name: flaskapp
+        depends on:
+            - "mysqldb"
