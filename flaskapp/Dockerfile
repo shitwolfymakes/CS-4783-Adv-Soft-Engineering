@@ -1,12 +1,23 @@
-#use mysql official image
-FROM mysql
+FROM ubuntu:16.04
 
-#add a database
-ENV MYSQL_DATABASE assignment5
+RUN apt-get update -y
+RUN apt-get install -y software-properties-common
+RUN add-apt-repository -y ppa:deadsnakes/ppa
+RUN apt-get update -y
+RUN apt-get install -y python3.7 python3-pip
+RUN pip3 install --upgrade pip
 
-WORKDIR /flaskapp
+COPY flaskapp/requirements.txt /app/requirements.txt
 
-COPY mysqldb.sql /mydb/
-COPY start.sh /mydb/
+WORKDIR /app
 
-CMD /bin/bash /mydb/start.sh
+RUN pip3 install -r requirements.txt
+
+COPY . /app
+
+# HAS TO BE THE SAME PORT AS THE ONE WE RUN THE FLASK APP ON
+EXPOSE 12137
+
+#ENTRYPOINT [ "python3" ]
+
+CMD python3 flaskapp/flaskapp.py --cert=adhoc
