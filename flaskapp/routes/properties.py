@@ -8,8 +8,6 @@ currentDir = ""
 app = flask.current_app
 bp = flask.Blueprint("properties", __name__)
 
-access_db = "use assingment4; "
-
 
 def prepare_response(tag, msg):
     response = [{
@@ -25,10 +23,9 @@ def add_property_get():
     try:
         gateway = DBGateway()
         conn = gateway.get_connection()
-        cur = conn.cursor(pymysql.cursors.DictCursor)
-        sql = access_db + "SELECT * FROM tbl_props;"
+        cur = conn.cursor()
+        sql = "SELECT * FROM tbl_props"
         cur.execute(sql)
-        cur.execute("go")
         rows = cur.fetchall()
         print(rows)
         response = jsonify(rows)
