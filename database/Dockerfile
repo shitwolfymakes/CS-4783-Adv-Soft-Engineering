@@ -2,7 +2,7 @@
 FROM mysql
 
 #add a database
-ENV MYSQL_DATABASE assignment5
+ENV MYSQL_DATABASE assignment4
 
 WORKDIR /flaskapp
 
