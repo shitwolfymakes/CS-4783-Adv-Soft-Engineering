@@ -1,4 +1,4 @@
-FROM mysql:latest
+FROM mysql
 
 ENV MYSQL_DATABASE=assignment4
 ENV MYSQL_ROOT_PASSWORD=@ss1gnmentFour
