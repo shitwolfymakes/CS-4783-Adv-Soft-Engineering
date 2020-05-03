@@ -8,6 +8,8 @@ currentDir = ""
 app = flask.current_app
 bp = flask.Blueprint("properties", __name__)
 
+access_db = "use assingment4; "
+
 
 def prepare_response(tag, msg):
     response = [{
@@ -24,9 +26,11 @@ def add_property_get():
         gateway = DBGateway()
         conn = gateway.get_connection()
         cur = conn.cursor(pymysql.cursors.DictCursor)
-        sql = "SELECT * FROM tbl_property"
+        sql = access_db + "SELECT * FROM tbl_props;"
         cur.execute(sql)
+        cur.execute("go")
         rows = cur.fetchall()
+        print(rows)
         response = jsonify(rows)
         response.status_code = 200
         return response
@@ -54,7 +58,7 @@ def add_property_post():
             cur = None
             conn = None
             try:
-                sql = "INSERT INTO tbl_property(ID, address, city, state, zip) VALUES(NULL, %s, %s, %s, %s)"
+                sql = "INSERT INTO tbl_props (ID, address, city, state, zip) VALUES(NULL, %s, %s, %s, %s)"
                 data = (address, city, state, zip_code)
                 gateway = DBGateway()
                 conn = gateway.get_connection()
@@ -104,7 +108,7 @@ def id_property_get(property_id):
             cur = conn.cursor(pymysql.cursors.DictCursor)
 
             # check to see if the property exists
-            cur.execute("SELECT * FROM tbl_property WHERE ID=%s", property_id)
+            cur.execute("SELECT * FROM tbl_props WHERE ID=%s", property_id)
             rows = cur.fetchall()
             if not rows:
                 return prepare_response("message", "ID does not exist in database."), status.HTTP_404_NOT_FOUND
@@ -142,13 +146,13 @@ def id_property_delete(property_id):
             cur = conn.cursor(pymysql.cursors.DictCursor)
 
             # check to see if the property exists
-            cur.execute("SELECT * FROM tbl_property WHERE ID=%s", property_id)
+            cur.execute("SELECT * FROM tbl_props WHERE ID=%s", property_id)
             rows = cur.fetchall()
             if not rows:
                 return prepare_response("message", "ID does not exist in database."), status.HTTP_404_NOT_FOUND
 
             # delete the property if it does
-            cur.execute("DELETE FROM tbl_property WHERE ID=%s", property_id)
+            cur.execute("DELETE FROM tbl_props WHERE ID=%s", property_id)
             conn.commit()
             return prepare_response("message", "deleted"), status.HTTP_200_OK
         except Exception as e:
@@ -185,7 +189,7 @@ def id_property_put(property_id):
             cur = conn.cursor(pymysql.cursors.DictCursor)
 
             # check to see if the property exists
-            cur.execute("SELECT * FROM tbl_property WHERE ID=%s", property_id)
+            cur.execute("SELECT * FROM tbl_props WHERE ID=%s", property_id)
             rows = cur.fetchall()
             if not rows:
                 return prepare_response("message", "ID does not exist in database."), status.HTTP_404_NOT_FOUND
@@ -197,22 +201,22 @@ def id_property_put(property_id):
                 if ans == 'address':
                     address = req_data['address']
                     if 1 <= len(address) <= 200:
-                        cur.execute("UPDATE tbl_property SET address = %s WHERE ID = %s", (address, property_id))
+                        cur.execute("UPDATE tbl_props SET address = %s WHERE ID = %s", (address, property_id))
                         conn.commit()
                 if ans == 'state':
                     state = req_data['state']
                     if len(state) == 2:
-                        cur.execute("UPDATE tbl_property SET state = %s WHERE ID = %s", (state, property_id))
+                        cur.execute("UPDATE tbl_props SET state = %s WHERE ID = %s", (state, property_id))
                         conn.commit()
                 if ans == 'city':
                     city = req_data['city']
                     if 1 <= len(city) <= 50:
-                        cur.execute("UPDATE tbl_property SET city = %s WHERE ID = %s", (city, property_id))
+                        cur.execute("UPDATE tbl_props SET city = %s WHERE ID = %s", (city, property_id))
                         conn.commit()
                 if ans == 'zip':
                     zip_code = req_data['zip']
                     if 5 <= len(zip_code) <= 10:
-                        cur.execute("UPDATE tbl_property SET zip = %s WHERE ID = %s", (zip_code, property_id))
+                        cur.execute("UPDATE tbl_props SET zip = %s WHERE ID = %s", (zip_code, property_id))
                         conn.commit()
             # end for
             return prepare_response("message", "updated"), status.HTTP_200_OK

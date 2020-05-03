@@ -1,5 +1,7 @@
 {
-    "url": "easel2.fulgentcorp.com",
-    "user": "xne693",
-    "pass": "v3FPwOMciKr1dIoHvKUJ"
+    "db": "assignment4",
+    "url": "localhost",
+    "user": "SA",
+    "pass": "@ss1gnmentFour",
+    "port": 12138
 }

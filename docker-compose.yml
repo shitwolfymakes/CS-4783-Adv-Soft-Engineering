@@ -1,19 +1,19 @@
 version: "3"
 services:
     mysqldb:
-        build: flaskapp
+        build: database
         image: mysql:8.0.17
         environment:
-            MYSQL_USER: mysql
-            MYSQL_PASSWORD: assignmentFive
-            MYSQL_DATABASE: tbl_properties_test
+            SA_PASSWORD: "@ss1gnmentFour"
+            ACCEPT_EULA: "Y"
+            MSSQL_AGENT_ENABLED: "true"
         ports:
-            - "12136:12136"
+            - "12138:1433"
         container_name: mysqldb
     flaskapp:
-        build: api/.
+        build: flaskapp
         ports:
             - "12137:12137"
         container_name: flaskapp
-        depends on:
+        depends_on:
             - "mysqldb"

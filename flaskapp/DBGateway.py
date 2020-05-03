@@ -1,6 +1,7 @@
 """Provides database access functionality"""
 
 import json
+import pyodbc
 import pymysql
 import pymysql.cursors
 
@@ -15,7 +16,12 @@ class DBGateway:
         self._conn = pymysql.connect(host=self.db_creds['url'],
                                      user=self.db_creds['user'],
                                      password=self.db_creds['pass'],
-                                     db=self.db_creds['user'])
+                                     port=self.db_creds['port'],
+                                     db=self.db_creds['db'])
+        self.cnxn = pyodbc.connect("Driver={SQL Server Native Client 11.0};" +
+                                   "Server=localhost,12138;" +
+                                   "Database=assignment4;" +
+                                   "Trusted_Connection=yes;")
     #end init
 
 
@@ -31,7 +37,7 @@ def main():
     #print(gateway.db_creds)
     conn = gateway.get_connection()
     with conn.cursor() as cursor:
-        sql = "SELECT * FROM `tbl_property`"
+        sql = "SELECT * FROM tbl_props"
         cursor.execute(sql)
         results = cursor.fetchall()
         for result in results:
