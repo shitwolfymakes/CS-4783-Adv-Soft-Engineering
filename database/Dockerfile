@@ -1,15 +1,8 @@
-FROM microsoft/mssql-server-linux:2017-latest
+FROM mysql:latest
 
-ENV ACCEPT_EULA=Y
-ENV SA_PASSWORD=assignmentFour
-ENV MSSQL_PID=Developer
-ENV MSSQL_TCP_PORT=1433
+ENV MYSQL_DATABASE=assignment4
+ENV MYSQL_ROOT_PASSWORD=@ss1gnmentFour
 
-WORKDIR /src
+COPY mysqldb.sql /docker-entrypoint-initdb.d
 
-COPY mydb.sql /mydb/
-COPY start.sh /mydb/
-
-EXPOSE 1433
-
-CMD /bin/bash /mydb/start.sh
+EXPOSE 3306

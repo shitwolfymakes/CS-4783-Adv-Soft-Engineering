@@ -3,12 +3,8 @@ services:
     mysqldb:
         build: database
         image: mysql:8.0.17
-        environment:
-            SA_PASSWORD: "@ss1gnmentFour"
-            ACCEPT_EULA: "Y"
-            MSSQL_AGENT_ENABLED: "true"
         ports:
-            - "12138:1433"
+            - "12138:3306"
         container_name: mysqldb
     flaskapp:
         build: flaskapp
