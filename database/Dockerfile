@@ -1,4 +1,4 @@
-FROM mysql
+FROM mysql:8.0.19
 
 ENV MYSQL_DATABASE=assignment4
 ENV MYSQL_ROOT_PASSWORD=@ss1gnmentFour

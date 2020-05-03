@@ -15,7 +15,12 @@ class DBGateway:
             "database": "assignment4"
         }
 
-        self._conn = mysql.connector.connect(**config)
+        #self._conn = mysql.connector.connect(**config)
+        self._conn = pymysql.connect(host="mysqldb",
+                                     user="root",
+                                     password="@ss1gnmentFour",
+                                     port=3306,
+                                     db="assignment4")
     #end init
 
 
@@ -27,9 +32,13 @@ class DBGateway:
 
 # Testing Harness Below Here #
 def main():
-    gateway = DBGateway()
+    #gateway = DBGateway()
     #print(gateway.db_creds)
-    conn = gateway.get_connection()
+    conn = pymysql.connect(host="localhost",
+                           user="root",
+                           password="@ss1gnmentFour",
+                           port=12138,
+                           db="assignment4")
     with conn.cursor() as cursor:
         sql = "SELECT * FROM tbl_props"
         cursor.execute(sql)

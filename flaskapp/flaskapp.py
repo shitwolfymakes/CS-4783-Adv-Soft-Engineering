@@ -12,6 +12,8 @@ def main():
     if "--cert=adhoc" in sys.argv:
         using_https = True
     app = Flask(__name__)
+    app.config['SQLALCHEMY_DATABASE_URI'] = 'mysql+pymysql://root:@ss1gnmentFour@mysqldb/flaskapp'
+    app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = True
 
     ### start swagger boilerplate ###
     swagger_url = '/swagger'

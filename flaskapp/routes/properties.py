@@ -18,25 +18,15 @@ def prepare_response(tag, msg):
 
 @bp.route('/properties', methods=['GET'])
 def add_property_get():
-    cur = None
-    conn = None
-    try:
-        gateway = DBGateway()
-        conn = gateway.get_connection()
-        cur = conn.cursor()
+    gateway = DBGateway()
+    conn = gateway.get_connection()
+    with conn.cursor() as cursor:
         sql = "SELECT * FROM tbl_props"
-        cur.execute(sql)
-        rows = cur.fetchall()
-        print(rows)
-        response = jsonify(rows)
+        cursor.execute(sql)
+        results = cursor.fetchall()
+        response = jsonify(results)
         response.status_code = 200
         return response
-    except Exception as e:
-        print(e)
-    finally:
-        cur.close()
-        conn.close()
-    # end try/except/finally
 #end add_property
 
 
