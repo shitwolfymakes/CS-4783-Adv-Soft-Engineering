@@ -7,7 +7,7 @@ RUN apt-get update -y
 RUN apt-get install -y python3.7 python3-pip
 RUN pip3 install --upgrade pip
 
-COPY flaskapp/requirements.txt /app/requirements.txt
+COPY requirements.txt /app/requirements.txt
 
 WORKDIR /app
 
@@ -20,4 +20,4 @@ EXPOSE 12137
 
 #ENTRYPOINT [ "python3" ]
 
-CMD python3 flaskapp/flaskapp.py --cert=adhoc
+CMD python3 flaskapp.py --cert=adhoc
