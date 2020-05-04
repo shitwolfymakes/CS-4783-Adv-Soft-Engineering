@@ -6,16 +6,14 @@ We're using one file per route
 Double-check to make sure the project packages are as listed in 
 requirements.txt, a bad version of Flask caused me major problems
 
-NOTE: When testing swagger UI on a deployment server, localhost addresses will not work, they are for local testing only.  
-Also, Https will only work if the server is started with https enabled.
-
-Deployment server swagger address: [cs47831.fulgentcorp.com:12137/swagger/](cs47831.fulgentcorp.com:12137/swagger/)
+Deployment server swagger address: [https://localhost:12137/swagger/](https://localhost:12137/swagger/)
 
 #### To run:
-Navigate to the `flaskapp` folder  
-To run with http, use `python3 flaskapp.py`  
-To run with https, use `python3 flaskapp.py --cert=adhoc`
+run `docker-compose up --build`
 
-HTTP listens on port 12136
+We got the curl tests working locally, so `./test/curltest.sh` to run the tests. You may need to chmod first  
+Testing also works with Postman and Swagger
 
-HTTPS listens on port 12137
+HTTP listens on port 12136  
+HTTPS listens on port 12137  
+mysql listens on port 12138  
