@@ -17,7 +17,4 @@ RUN pip3 install -r requirements.txt
 
 COPY . /app
 
-# HAS TO BE THE SAME PORT AS THE ONE WE RUN THE FLASK APP ON
-EXPOSE 12137
-
-CMD python3 flaskapp.py --cert=adhoc
+CMD ["/bin/bash", "run_both.sh"]

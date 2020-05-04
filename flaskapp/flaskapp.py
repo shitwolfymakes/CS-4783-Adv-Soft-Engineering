@@ -32,7 +32,7 @@ def main():
     if using_https:
         app.run(host="0.0.0.0", port=12137, ssl_context='adhoc')
     else:
-        app.run(host="0.0.0.0", port=12137)
+        app.run(host="0.0.0.0", port=12136)
 #end main
 
 
