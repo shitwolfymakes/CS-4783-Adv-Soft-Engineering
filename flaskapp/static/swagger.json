@@ -7,10 +7,10 @@
   },
   "servers": [
     {
-      "url": "https://127.0.0.1:12137"
+      "url": "https://localhost:12137"
     },
     {
-      "url": "http://127.0.0.1:12137"
+      "url": "http://localhost:12136"
     }
   ],
   "tags": [
