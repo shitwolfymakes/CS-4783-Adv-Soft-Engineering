@@ -20,7 +20,7 @@ def prepare_response(tag, msg):
 def add_property_get():
     gateway = DBGateway()
     conn = gateway.get_connection()
-    with conn.cursor() as cursor:
+    with conn.cursor(pymysql.cursors.DictCursor) as cursor:
         sql = "SELECT * FROM tbl_props"
         cursor.execute(sql)
         results = cursor.fetchall()
