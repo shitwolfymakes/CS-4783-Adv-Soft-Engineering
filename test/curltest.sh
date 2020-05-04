@@ -10,7 +10,7 @@ let KILL=9
 rm -Rf actual.txt
 
 #TEST1 check hello
-curl --silent -k -X GET "https://cs47832.fulgentcorp.com:12137/hello" > actual.txt
+curl --silent -k -X GET "https://localhost:12137/hello" > actual.txt
 if grep "\[{\"message\":\"hello yourself\"}\]" actual.txt; then
     let FOUND=1
 else
@@ -24,7 +24,7 @@ fi
 
 
 #TEST2 check post
-curl --silent -k -X POST "https://cs47832.fulgentcorp.com:12137/properties" \
+curl --silent -k -X POST "https://localhost:12137/properties" \
 --header 'x-api-key: cs4783FTW' \
 --data-raw '{"address": "123 Test ave", "city": "New York", "state": "NY", "zip": "899999"}' > actual.txt
 if grep "\[{\"message\":\"added\"}\]" actual.txt; then
@@ -40,7 +40,7 @@ fi
 
 
 #TEST3 check get list
-curl --silent -k -X GET "https://cs47832.fulgentcorp.com:12137/properties" > actual.txt
+curl --silent -k -X GET "https://localhost:12137/properties" > actual.txt
 OLDESTRECORD=`grep -oP '^[^0-9]*\K[0-9]+' actual.txt` #store the id of the oldest record
 if grep "\[{\"ID\"" actual.txt; then
     let FOUND=1
@@ -55,7 +55,7 @@ fi
 
 
 #TEST4 check put with all values
-curl --silent -k -X PUT "https://cs47832.fulgentcorp.com:12137/properties/$OLDESTRECORD" \
+curl --silent -k -X PUT "https://localhost:12137/properties/$OLDESTRECORD" \
 --header 'x-api-key: cs4783FTW' \
 --data-raw '{"address": "123 Test ave", "city": "New York", "state": "NY", "zip": "899999"}' > actual.txt
 if grep "\[{\"message\":\"updated\"}\]" actual.txt; then
@@ -71,7 +71,7 @@ fi
 
 
 #TEST5 get the previously updated property
-curl --silent -k -X GET "https://cs47832.fulgentcorp.com:12137/properties/$OLDESTRECORD" > actual.txt
+curl --silent -k -X GET "https://localhost:12137/properties/$OLDESTRECORD" > actual.txt
 if grep "\[{\"ID\":$OLDESTRECORD,\"address\":\"123 Test ave\",\"city\":\"New York\",\"state\":\"NY\",\"zip\":\"899999\"}\]" actual.txt; then
     let FOUND=1
 else
@@ -85,7 +85,7 @@ fi
 
 
 #TEST6 put attempt without key header test
-curl --silent -k -X PUT "https://cs47832.fulgentcorp.com:12137/properties/$OLDESTRECORD" \
+curl --silent -k -X PUT "https://localhost:12137/properties/$OLDESTRECORD" \
 --data-raw '{"address": "123 Not Gonna Work", "city": "New York", "state": "NY", "zip": "999999"}' >actual.txt
 if grep "{\"message\":\"ERROR: Unauthorized\"}" actual.txt; then
     let FOUND=1
@@ -100,7 +100,7 @@ fi
 
 
 #TEST7 put attempt only updating one field
-curl --silent -k -X PUT "https://cs47832.fulgentcorp.com:12137/properties/$OLDESTRECORD" \
+curl --silent -k -X PUT "https://localhost:12137/properties/$OLDESTRECORD" \
 --header 'x-api-key: cs4783FTW' \
 --data-raw '{"address": "123 Updated Version"}' >actual.txt
 if grep "\[{\"message\":\"updated\"}\]" actual.txt; then
@@ -116,10 +116,10 @@ fi
 
 
 #TEST8 unauthorized delete
-curl --silent -k -X POST "https://cs47832.fulgentcorp.com:12137/properties" \
+curl --silent -k -X POST "https://localhost:12137/properties" \
 --header 'x-api-key: cs4783FTW' \
 --data-raw '{"address": "123 Test ave", "city": "New York", "state": "NY", "zip": "899999"}'
-curl --silent -k -X DELETE "https://cs47832.fulgentcorp.com:12137/properties/$OLDESTRECORD" >actual.txt
+curl --silent -k -X DELETE "https://localhost:12137/properties/$OLDESTRECORD" > actual.txt
 if grep "{\"message\":\"ERROR: Unauthorized\"}" actual.txt; then
     let FOUND=1
 else
@@ -133,7 +133,7 @@ fi
 
 
 #TEST9 try to delete an existing property, authorized
-curl --silent -k -X DELETE "https://cs47832.fulgentcorp.com:12137/properties/$OLDESTRECORD" \
+curl --silent -k -X DELETE "https://localhost:12137/properties/$OLDESTRECORD" \
 --header 'x-api-key: cs4783FTW' > actual.txt
 if grep "\[{\"message\":\"deleted\"}\]" actual.txt; then
     let FOUND=1
@@ -148,7 +148,7 @@ fi
 
 
 #TEST10 provide non int ID
-curl --silent -k -X GET "https://cs47832.fulgentcorp.com:12137/properties/one" > actual.txt
+curl --silent -k -X GET "https://localhost:12137/properties/one" > actual.txt
 if grep "\[{\"message\":\"ID is not an integer\"}\]" actual.txt; then
     let FOUND=1
 else
