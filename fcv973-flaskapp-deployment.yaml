@@ -1,0 +1,28 @@
+apiVersion: extensions/v1beta1
+kind: Deployment
+metadata:
+  annotations:
+    kompose.cmd: /snap/kompose/1/./kompose-linux-amd64 convert
+    kompose.version: 1.18.0 (06a2e56)
+  creationTimestamp: null
+  labels:
+    io.kompose.service: fcv973-flaskapp
+  name: fcv973-flaskapp
+spec:
+  replicas: 1
+  strategy: {}
+  template:
+    metadata:
+      creationTimestamp: null
+      labels:
+        io.kompose.service: fcv973-flaskapp
+    spec:
+      containers:
+      - image: cs4783registry.azurecr.io/fcv973-flaskapp:latest
+        name: fcv973-flaskapp
+        ports:
+        - containerPort: 12136
+        - containerPort: 12137
+        resources: {}
+      restartPolicy: Always
+status: {}

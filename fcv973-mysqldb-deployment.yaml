@@ -1,0 +1,32 @@
+apiVersion: extensions/v1beta1
+kind: Deployment
+metadata:
+  annotations:
+    kompose.cmd: /snap/kompose/1/./kompose-linux-amd64 convert
+    kompose.version: 1.18.0 (06a2e56)
+  creationTimestamp: null
+  labels:
+    io.kompose.service: fcv973-mysqldb
+  name: fcv973-mysqldb
+spec:
+  replicas: 1
+  strategy: {}
+  template:
+    metadata:
+      creationTimestamp: null
+      labels:
+        io.kompose.service: fcv973-mysqldb
+    spec:
+      containers:
+      - env:
+        - name: MYSQL_DATABASE
+          value: assignment4
+        - name: MYSQL_ROOT_PASSWORD
+          value: '@ss1gnmentFour'
+        image: cs4783registry.azurecr.io/fcv973-mysqldb:latest
+        name: fcv973-mysqldb
+        ports:
+        - containerPort: 3306
+        resources: {}
+      restartPolicy: Always
+status: {}

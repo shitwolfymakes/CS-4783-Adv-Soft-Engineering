@@ -1,0 +1,19 @@
+apiVersion: v1
+kind: Service
+metadata:
+  annotations:
+    kompose.cmd: /snap/kompose/1/./kompose-linux-amd64 convert
+    kompose.version: 1.18.0 (06a2e56)
+  creationTimestamp: null
+  labels:
+    io.kompose.service: fcv973-mysqldb
+  name: fcv973-mysqldb
+spec:
+  ports:
+  - name: "12138"
+    port: 12138
+    targetPort: 3306
+  selector:
+    io.kompose.service: fcv973-mysqldb
+status:
+  loadBalancer: {}

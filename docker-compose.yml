@@ -1,15 +1,19 @@
 version: "3"
 services:
-    mysqldb:
-        build: database
+    fcv973-mysqldb:
+        image: cs4783registry.azurecr.io/fcv973-mysqldb:latest
+        restart: always
+        environment:
+          MYSQL_DATABASE: assignment4
+          MYSQL_ROOT_PASSWORD: '@ss1gnmentFour'
         ports:
             - "12138:3306"
-        container_name: mysqldb
-    flaskapp:
-        build: flaskapp
+    fcv973-flaskapp:
+        image: cs4783registry.azurecr.io/fcv973-flaskapp:latest
+        restart: always
         ports:
             - "12136:12136"
             - "12137:12137"
-        container_name: flaskapp
-        depends_on:
-            - "mysqldb"
+        #container_name: fcv973-flaskapp
+        #depends_on:
+        #    - "fcv973-mysqldb"

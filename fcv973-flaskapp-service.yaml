@@ -1,0 +1,23 @@
+apiVersion: v1
+kind: Service
+metadata:
+  annotations:
+    kompose.cmd: /snap/kompose/1/./kompose-linux-amd64 convert
+    kompose.version: 1.18.0 (06a2e56)
+  creationTimestamp: null
+  labels:
+    io.kompose.service: fcv973-flaskapp
+  name: fcv973-flaskapp
+spec:
+  type: LoadBalancer
+  ports:
+  - name: "12136"
+    port: 12136
+    targetPort: 12136
+  - name: "12137"
+    port: 12137
+    targetPort: 12137
+  selector:
+    io.kompose.service: fcv973-flaskapp
+status:
+  loadBalancer: {}
