@@ -20,9 +20,12 @@ spec:
       containers:
       - image: cs4783registry.azurecr.io/fcv973-flaskapp:latest
         name: fcv973-flaskapp
+        command: ["bash"]
+        args: ["run_both.sh"]
         ports:
         - containerPort: 12136
         - containerPort: 12137
         resources: {}
+      hostname: fcv973-flaskapp
       restartPolicy: Always
 status: {}
