@@ -6,10 +6,10 @@ import pymysql.cursors
 
 class DBGateway:
     def __init__(self):
-        self._conn = pymysql.connect(host="52.188.183.99",
+        self._conn = pymysql.connect(host="mysqldb",
                                      user="root",
-                                     password="Ass!gnment4",
-                                     port=12138,
+                                     password="@ss1gnmentFour",
+                                     port=3306,
                                      db="assignment4")
     #end init
 
@@ -24,7 +24,7 @@ class DBGateway:
 def main():
     conn = pymysql.connect(host="localhost",
                            user="root",
-                           password="Ass!gnment4",
+                           password="@ss1gnmentFour",
                            port=12138,
                            db="assignment4")
     with conn.cursor() as cursor:

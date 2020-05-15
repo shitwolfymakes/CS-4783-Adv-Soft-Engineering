@@ -22,11 +22,11 @@ spec:
         - name: MYSQL_DATABASE
           value: assignment4
         - name: MYSQL_ROOT_PASSWORD
-          value: Ass!gnment4
+          value: '@ss1gnmentFour'
         image: cs4783registry.azurecr.io/fcv973-mysqldb:latest
         name: fcv973-mysqldb
         ports:
-        - containerPort: 12138
+        - containerPort: 3306
         resources: {}
       restartPolicy: Always
 status: {}

@@ -10,7 +10,7 @@ last_pid=$!
 sleep 15
 
 #import db schems and data
-/opt/mssql-tools/bin/sqlcmd -S localhost -U SA -P Ass!gnment4 -i /mydb/mydb.sql
+/opt/mssql-tools/bin/sqlcmd -S localhost -U SA -P '@ss1gnmentFour' -i /mydb/mydb.sql
 
 #stop db server BG
 kill -KILL $last_pid

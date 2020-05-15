@@ -5,7 +5,7 @@ services:
         restart: always
         environment:
           MYSQL_DATABASE: assignment4
-          MYSQL_ROOT_PASSWORD: 'Ass!gnment4'
+          MYSQL_ROOT_PASSWORD: '@ss1gnmentFour'
         ports:
             - "12138:3306"
     fcv973-flaskapp:
