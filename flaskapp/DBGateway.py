@@ -9,7 +9,7 @@ class DBGateway:
         self._conn = pymysql.connect(host="52.188.183.99",
                                      user="root",
                                      password="@ss1gnmentFour",
-                                     port=3306,
+                                     port=12138,
                                      db="assignment4")
     #end init
 
