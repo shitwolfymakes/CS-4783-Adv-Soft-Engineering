@@ -57,7 +57,7 @@ deploy-job:
     - kubectl apply -f fcv973-flaskapp-deployment.yaml
     - kubectl set image deployment fcv973-flaskapp fcv973-flaskapp=cs4783registry.azurecr.io/fcv973-flaskapp:latest
     - kubectl set image deployment fcv973-flaskapp fcv973-flaskapp=cs4783registry.azurecr.io/fcv973-flaskapp
-    - kubectl rollout restart deployment
+    - kubectl rollout restart deployment fcv973-flaskapp fcv973-mysqldb
     #...
 
 
