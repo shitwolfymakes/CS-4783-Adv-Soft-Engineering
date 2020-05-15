@@ -6,7 +6,7 @@ import pymysql.cursors
 
 class DBGateway:
     def __init__(self):
-        self._conn = pymysql.connect(host="mysqldb",
+        self._conn = pymysql.connect(host="fcv973-mysqldb",
                                      user="root",
                                      password="@ss1gnmentFour",
                                      port=3306,
