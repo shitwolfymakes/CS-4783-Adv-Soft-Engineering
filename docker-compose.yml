@@ -8,12 +8,14 @@ services:
           MYSQL_ROOT_PASSWORD: '@ss1gnmentFour'
         ports:
             - "12138:3306"
+        container_name: fcv973-mysqldb
+        hostname: fcv973-mysqldb
     fcv973-flaskapp:
         image: cs4783registry.azurecr.io/fcv973-flaskapp:latest
         restart: always
         ports:
             - "12136:12136"
             - "12137:12137"
-        #container_name: fcv973-flaskapp
-        #depends_on:
-        #    - "fcv973-mysqldb"
+        container_name: fcv973-flaskapp
+        depends_on:
+            - "fcv973-mysqldb"
