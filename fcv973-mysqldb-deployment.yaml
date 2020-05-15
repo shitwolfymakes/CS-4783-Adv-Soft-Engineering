@@ -22,7 +22,7 @@ spec:
         - name: MYSQL_DATABASE
           value: assignment4
         - name: MYSQL_ROOT_PASSWORD
-          value: '@ss1gnmentFour'
+          value: @ss1gnmentFour
         image: cs4783registry.azurecr.io/fcv973-mysqldb:latest
         name: fcv973-mysqldb
         ports:

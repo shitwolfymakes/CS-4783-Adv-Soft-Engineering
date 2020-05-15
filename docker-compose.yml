@@ -5,7 +5,7 @@ services:
         restart: always
         environment:
           MYSQL_DATABASE: assignment4
-          MYSQL_ROOT_PASSWORD: '@ss1gnmentFour'
+          MYSQL_ROOT_PASSWORD: @ss1gnmentFour
         ports:
             - "12138:3306"
         container_name: fcv973-mysqldb
