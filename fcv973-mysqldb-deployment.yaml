@@ -26,7 +26,7 @@ spec:
         image: cs4783registry.azurecr.io/fcv973-mysqldb:latest
         name: fcv973-mysqldb
         ports:
-        - containerPort: 3306
+        - containerPort: 12138
         resources: {}
       restartPolicy: Always
 status: {}
