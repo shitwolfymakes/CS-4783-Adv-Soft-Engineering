@@ -8,7 +8,7 @@ class DBGateway:
     def __init__(self):
         self._conn = pymysql.connect(host="mysqldb",
                                      user="root",
-                                     password="@ss1gnmentFour",
+                                     password="Ass!gnment4",
                                      port=3306,
                                      db="assignment4")
     #end init
@@ -24,7 +24,7 @@ class DBGateway:
 def main():
     conn = pymysql.connect(host="localhost",
                            user="root",
-                           password="@ss1gnmentFour",
+                           password="Ass!gnment4",
                            port=12138,
                            db="assignment4")
     with conn.cursor() as cursor:
