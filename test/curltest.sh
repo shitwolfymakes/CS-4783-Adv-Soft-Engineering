@@ -10,7 +10,7 @@ let KILL=9
 rm -Rf actual.txt
 
 #TEST1 check hello
-curl --silent -k -X GET "https://localhost:12137/hello" > actual.txt
+curl --silent -k -X GET "https://52.188.183.99:12137/hello" > actual.txt
 if grep "\[{\"message\":\"hello yourself\"}\]" actual.txt; then
     let FOUND=1
 else
@@ -24,7 +24,7 @@ fi
 
 
 #TEST2 check post
-curl --silent -k -X POST "https://localhost:12137/properties" \
+curl --silent -k -X POST "https://52.188.183.99:12137/properties" \
 --header 'x-api-key: cs4783FTW' \
 --data-raw '{"address": "123 Test ave", "city": "New York", "state": "NY", "zip": "899999"}' > actual.txt
 if grep "\[{\"message\":\"added\"}\]" actual.txt; then
