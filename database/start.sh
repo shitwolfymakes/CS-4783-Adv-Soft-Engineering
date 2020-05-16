@@ -2,5 +2,5 @@
 
 #start the daemon
 echo "Running sql.."
-mysqld_safe &
+mysqld_safe
 echo "done!"
