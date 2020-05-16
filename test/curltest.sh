@@ -159,7 +159,8 @@ if [ $FOUND = 0 ]; then
     #kill -KILL $last_pid
     exit 1
 fi
-
+rm ../actual.txt
+rm actual.txt
 
 echo "ALL CURL TESTS SUCCESSFUL"
 #kill -KILL $last_pid
