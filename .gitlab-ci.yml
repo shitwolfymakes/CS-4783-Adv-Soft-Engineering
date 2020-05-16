@@ -57,6 +57,11 @@ deploy-job:
     - kubectl apply -f fcv973-flaskapp-deployment.yaml
     - kubectl set image deployment fcv973-flaskapp fcv973-flaskapp=cs4783registry.azurecr.io/fcv973-flaskapp:latest
     - kubectl set image deployment fcv973-flaskapp fcv973-flaskapp=cs4783registry.azurecr.io/fcv973-flaskapp
+    - docker build -t cs4783registry.azurecr.io/fcv973-mysqldb:latest ./database
+    - docker push cs4783registry.azurecr.io/fcv973-mysqldb:latest
+    - kubectl apply -f fcv973-mysqldb-deployment.yaml
+    - kubectl set image deployment fcv973-mysqldb fcv973-mysqldb=cs4783registry.azurecr.io/fcv973-mysqldb:latest
+    - kubectl set image deployment fcv973-mysqldb fcv973-mysqldb=cs4783registry.azurecr.io/fcv973-mysqldb
     - kubectl rollout restart deployment fcv973-flaskapp fcv973-mysqldb
     #...
 
