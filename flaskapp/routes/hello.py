@@ -19,5 +19,5 @@ def prepare_response(tag, msg):
 
 @bp.route("/hello")
 def hello():
-    return prepare_response("message", "SO LONG SCHOOL WOOOOOOOOOOOOOOOO"), status.HTTP_200_OK
+    return prepare_response("message", "SO LONG SCHOOL WOOOOOOOOOOOOOOOO you'll be back"), status.HTTP_200_OK
 #end hello
